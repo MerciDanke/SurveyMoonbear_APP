@@ -210,6 +210,7 @@ javascript:
   }
 
   $('#form').on('submit', function(e) {
+    $(window).off('beforeunload');
     storeItemsUpdatedTime();
 
     $('#btn-submit').prop('disabled', true);
