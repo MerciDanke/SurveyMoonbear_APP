@@ -247,6 +247,11 @@ javascript:
     $('input[name=moonbear_start_time]').val(new Date());
   });
 
+  /* Show browser warning before reload or leave the page */
+  $(window).on('beforeunload', function() {
+    return '';
+  });
+
 css:
   .vas-unclicked::-webkit-slider-thumb {
     background: rgba(0, 0, 0, 0);
