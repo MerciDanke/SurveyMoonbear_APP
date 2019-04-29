@@ -41,6 +41,8 @@ module SurveyMoonbear
 
     configure do
       require 'sequel'
+      Sequel.extension :string_date_time
+
       DB = Sequel.connect(ENV['DATABASE_URL'])
 
       def self.DB

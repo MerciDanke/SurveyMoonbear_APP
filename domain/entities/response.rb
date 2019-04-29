@@ -11,6 +11,7 @@ module SurveyMoonbear
       attribute :page_index, Types::Int
       attribute :item_order, Types::Int
       attribute :response, Types::Strict::String.optional
+      attribute :updated_at, Types::Strict::Time.optional
       attribute :item_data, Types::Strict::String.optional
     end
   end

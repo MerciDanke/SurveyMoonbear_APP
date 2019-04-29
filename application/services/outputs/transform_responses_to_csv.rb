@@ -47,6 +47,7 @@ module SurveyMoonbear
           if !res_obj.item_data.nil?
             item_name = JSON.parse(res_obj.item_data)['name']
             response_hashes[respondent_id][item_name] = res_obj.response
+            response_hashes[respondent_id][item_name+'-updated_at'] = res_obj.updated_at
           else  # Additional data's item_data column is nil
             case res_obj.item_order
             when START_TIME_ITEM_ORDER

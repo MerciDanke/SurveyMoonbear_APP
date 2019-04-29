@@ -180,10 +180,10 @@ module SurveyMoonbear
         str = "<div class='form-group mt-5'>"
         if item.required == 1
           str += "<label for='#{item.name}' class='lead'>#{item.description}<span class='text-danger'>*</span></lable>"
-          str += "<input type='text' class='form-control required' name='#{item.name}' id='#{item.name}'>"
+          str += "<input type='text' class='form-control required update-record' name='#{item.name}' id='#{item.name}'>"
         else
           str += "<label for='#{item.name}' class='lead'>#{item.description}</lable>"
-          str += "<input type='text' class='form-control' name='#{item.name}' id='#{item.name}'>"
+          str += "<input type='text' class='form-control update-record' name='#{item.name}' id='#{item.name}'>"
         end
         str + '</div>'
       end
@@ -192,10 +192,10 @@ module SurveyMoonbear
         str = "<div class='form-group mt-5'>"
         if item.required == 1
           str += "<label for='#{item.name}' class='lead'>#{item.description}<span class='text-danger'>*</span></label>"
-          str += "<textarea class='form-control required' id='#{item.name}' name='#{item.name}' rows='3'></textarea>"
+          str += "<textarea class='form-control required update-record' id='#{item.name}' name='#{item.name}' rows='3'></textarea>"
         else
           str += "<label for='#{item.name}' class='lead'>#{item.description}</label>"
-          str += "<textarea class='form-control' id='#{item.name}' name='#{item.name}' rows='3'></textarea>"
+          str += "<textarea class='form-control update-record' id='#{item.name}' name='#{item.name}' rows='3'></textarea>"
         end
         str + '</div>'
       end
@@ -228,9 +228,9 @@ module SurveyMoonbear
         end
 
         if item.required == 1
-          str += "<input type='hidden' class='required' name='#{item.name}'>"
+          str += "<input type='hidden' class='required update-record' name='#{item.name}'>"
         else
-          str += "<input type='hidden' name='#{item.name}'>"
+          str += "<input type='hidden' class='update-record' name='#{item.name}'>"
         end 
         str += '</fieldset>'
       end
@@ -264,9 +264,9 @@ module SurveyMoonbear
 
         # Hidden input is for storing the str of joint multiple-checked-answers, and also for keeping update with changes
         str += if item.required == 1
-                "<input type='hidden' class='required' name='#{item.name}'>"
+                "<input type='hidden' class='required update-record' name='#{item.name}'>"
               else
-                "<input type='hidden' name='#{item.name}'>"
+                "<input type='hidden' class='update-record' name='#{item.name}'>"
               end
         str += '</fieldset>'
       end
@@ -316,9 +316,9 @@ module SurveyMoonbear
           end
 
           str += if item.required == 1
-                  "<input type='hidden' class='required' name='#{item.name}'>"
+                  "<input type='hidden' class='required update-record' name='#{item.name}'>"
                 else
-                  "<input type='hidden' name='#{item.name}'>"
+                  "<input type='hidden' class='update-record' name='#{item.name}'>"
                 end
           str += '</tr>'
         end
@@ -358,7 +358,7 @@ module SurveyMoonbear
           else
             str += "<td class='w-50 lead'>#{item.description}</td>"
           end
-          str += "<td class='w-50 align-middle'><input type='range' class='custom-range' id='#{item.name}' name='#{item.name}' min='#{min}' max='#{max}'></td>"
+          str += "<td class='w-50 align-middle'><input type='range' class='custom-range update-record' id='#{item.name}' name='#{item.name}' min='#{min}' max='#{max}'></td>"
           str += '</tr>'
         end
         str += '</table>'
@@ -398,9 +398,9 @@ module SurveyMoonbear
           str += "<td class='w-50 align-middle'><input type='range' class='custom-range vas-unclicked' name='vas-#{item.name}' min='#{min}' max='#{max}'></td>"
 
           str += if item.required == 1
-                  "<input type='hidden' class='required' name='#{item.name}'>"
+                  "<input type='hidden' class='required update-record' name='#{item.name}'>"
                 else
-                  "<input type='hidden' name='#{item.name}'>"
+                  "<input type='hidden' class='update-record' name='#{item.name}'>"
                 end
           str += '</tr>'
         end

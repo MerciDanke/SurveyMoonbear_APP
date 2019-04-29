@@ -51,6 +51,7 @@ html
               form id="form" action="/onlinesurvey/#{survey.id}/#{survey.launch_id}/submit" method="post"
                 input type="hidden" name="moonbear_start_time"
                 input type="hidden" name="moonbear_end_time"
+                input type="hidden" name="responses_updated_at"
 
               - if pages.length > 1
                 nav aria-label="Page navigation example" id="page_nav"
@@ -146,6 +147,7 @@ javascript:
 
     var input_name = type_name.substr(9, type_name.length);
     $('input[name='+input_name+']').val(checkbox_answers_str);
+    $('input[name='+input_name+']').trigger('change');
   }
 
   function joinCheckboxAnswersWithComma(type_name) {
@@ -164,12 +166,14 @@ javascript:
   function updateRadioHiddenInput(type_name, value) {
     var input_name = type_name.substr(6, type_name.length);
     $('input[name='+input_name+']').val(value);
+    $('input[name='+input_name+']').trigger('change');
   }
 
   $('input.vas-unclicked').click(function (e) {
     var type_name = $(this).prop('name');
     var input_name = type_name.substr(4, type_name.length);
     $('input[name='+input_name+']').val(this.value);
+    $('input[name='+input_name+']').trigger('change');
   });
 
   $('.other-text').on('keyup', function(e) { 
@@ -186,7 +190,28 @@ javascript:
     }
   });
 
+  $('.update-record').on('change', function(e) {
+    var updated_el = this;
+    updated_el.dataset.updated_at = new Date();
+  });
+
+  function collectItemsUpdatedTimeToHash() {
+    responses_updated_at = {}
+    $('.update-record').each(function(idx) {
+      responses_updated_at[this.name] = this.dataset.updated_at
+    });
+
+    return responses_updated_at;
+  }
+
+  function storeItemsUpdatedTime() {
+    responses_updated_at = collectItemsUpdatedTimeToHash();
+    $('input[name=responses_updated_at]').val( JSON.stringify(responses_updated_at) );
+  }
+
   $('#form').on('submit', function(e) {
+    storeItemsUpdatedTime();
+
     $('#btn-submit').prop('disabled', true);
     $('<input />').attr('type', 'hidden')
                   .attr('name', "moonbear_url_params")

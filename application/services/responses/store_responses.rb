@@ -38,15 +38,18 @@ module SurveyMoonbear
       # input { ..., pages: }
       def create_response_entities_arr(input)
         input[:response_entities_arr] = []
-        
+        responses_updated_at = JSON.parse( input[:responses]['responses_updated_at'] )
+      
         input[:pages].each do |page|
           page_index = page.index
           page.items.each do |item|
             next if item.type == 'Description' || item.type == 'Section Title' || item.type == 'Divider'
+            updated_at = responses_updated_at[item.name] ? responses_updated_at[item.name].to_time : nil
             new_response = create_response_entity(page_index,
                                                   item,
                                                   input[:respondent_id],
-                                                  input[:responses][item.name])
+                                                  input[:responses][item.name],
+                                                  updated_at)
             input[:response_entities_arr].push(new_response)
           end
         end
@@ -58,7 +61,7 @@ module SurveyMoonbear
         Failure('Failed to create survey items array.')
       end
 
-      def create_response_entity(page_index, item, respondent_id, response)
+      def create_response_entity(page_index, item, respondent_id, response, updated_at)
         item_json = JSON.generate(type: item.type,
                                   name: item.name,
                                   description: item.description,
@@ -71,6 +74,7 @@ module SurveyMoonbear
           page_index: page_index,
           item_order: item.order,
           response: response,
+          updated_at: updated_at,
           item_data: item_json
         )
       end
@@ -82,12 +86,14 @@ module SurveyMoonbear
                                           page_index: input[:page_index_for_other_data],
                                           item_order: START_TIME_INDEX,
                                           response: input[:responses]['moonbear_start_time'],
+                                          updated_at: nil,
                                           item_data: nil)
         end_time = Entity::Response.new(id: nil,
                                         respondent_id: input[:respondent_id],
                                         page_index: input[:page_index_for_other_data],
                                         item_order: END_TIME_INDEX,
                                         response: input[:responses]['moonbear_end_time'],
+                                        updated_at: nil,
                                         item_data: nil)
         time_records = [start_time, end_time]
         time_records.each { |record| input[:response_entities_arr].push(record) }
@@ -106,6 +112,7 @@ module SurveyMoonbear
                                                 page_index: input[:page_index_for_other_data],
                                                 item_order: URL_PARAMS_INDEX,
                                                 response: input[:responses]['moonbear_url_params'],
+                                                updated_at: nil,
                                                 item_data: nil)
           input[:response_entities_arr].push(url_param_item)
         end

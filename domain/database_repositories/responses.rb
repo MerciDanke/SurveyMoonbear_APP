@@ -31,6 +31,7 @@ module SurveyMoonbear
           page_index: db_record.page_index,
           item_order: db_record.item_order,
           response: db_record.response,
+          updated_at: db_record.updated_at,
           item_data: db_record.item_data
         )
       end
