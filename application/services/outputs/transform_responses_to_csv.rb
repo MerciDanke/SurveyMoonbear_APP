@@ -125,7 +125,7 @@ module SurveyMoonbear
           end
         end
 
-        Success(csv_string)
+        Success("\uFEFF#{csv_string}") # BOM(Byte Order Mark) for Excel
       rescue StandardError => e
         puts e
         Failure('Failed to transform responses array to csv')

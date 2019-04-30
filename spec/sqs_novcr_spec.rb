@@ -35,13 +35,15 @@ describe 'HAPPY: Tests of Responses SQS Accessment' do
       _(stored_responses_res.value!).must_be_nil
     end
 
-    it 'HAPPY: should be able to poll correct queue msg' do
+    it 'HAPPY: should be able to poll correct queue msg and store into database' do
       q = SurveyMoonbear::Messaging::Queue.new(CONFIG.RES_QUEUE_URL, CONFIG)
       q.poll do |msg|
         response_hashes = JSON.parse(msg)
-        
+        store_res = app.DB[:responses].multi_insert(response_hashes)
+
         _(response_hashes).must_be_instance_of Array
         _(response_hashes[0]['respondent_id']).wont_be_nil
+        _(store_res).must_be_instance_of Array
       end
     end
   end
