@@ -1,3 +1,4 @@
 queues:
-  - https://sqs.ap-northeast-1.amazonaws.com/538379610130/pokezon-search-development
+  # - https://sqs.ap-northeast-1.amazonaws.com/538379610130/pokezon-search-development
   # - https://sqs.ap-northeast-1.amazonaws.com/992209532282/moonbear_responses_store
+  - https://sqs.us-east-1.amazonaws.com/538379610130/pokezon-search-production
